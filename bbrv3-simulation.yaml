@@ -1,0 +1,32 @@
+version: 1.0
+scenarios:
+  - name: bbrv3_simulation
+    nodes:
+      - name: namespace1
+        type: namespace
+        netnsName: ns1
+      - name: namespace2
+        type: namespace
+        netnsName: ns2
+      - name: link1
+        type: veth
+        peer:
+          - namespace: namespace1
+            ifName: eth0
+          - namespace: namespace2
+            ifName: eth0
+    bbrv3:
+      - namespace: namespace1
+        interface: eth0
+        config:
+          minRTT: 10ms
+          pacing_gain: 1.25
+          standing: 1.0
+          startup: 2.0
+      - namespace: namespace2
+        interface: eth0
+        config:
+          minRTT: 15ms
+          pacing_gain: 1.5
+          standing: 0.5
+          startup: 3.0
